@@ -114,8 +114,11 @@ npx playwright install
 ### Running Tests
 
 ```bash
-# Run all tests headlessly across configured browsers
+# Run all tests headlessly across configured browsers (auto-cleans previous reports)
 npm test
+
+# Clean test reports and generated artifacts manually
+npm run clean
 
 # Run tests with interactive UI mode (recommended for debugging)
 npm run test:ui

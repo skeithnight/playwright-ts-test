@@ -26,7 +26,7 @@ export default defineConfig({
   use: {
     baseURL: 'https://www.saucedemo.com',
     testIdAttribute: 'data-test',
-    trace: 'on-first-retry',
+    trace: 'retain-on-failure',
     screenshot: 'only-on-failure',
     video: 'retain-on-failure',
     actionTimeout: 15000,
