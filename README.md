@@ -25,39 +25,44 @@ playwright-ts-test/
 ├── .github/
 │   └── workflows/
 │       └── playwright.yml         # GitHub Actions CI pipeline
+├── docs/
+│   └── assets/
+│       └── playwright-e2e-banner.jpg # Project banner asset
 ├── features/                      # 🥒 Cucumber Gherkin Feature Files
-│   ├── checkout.feature           # Single & multi-item checkout BDD scenarios
-│   ├── login.feature              # Authentication BDD scenarios
-│   ├── checkout-validation.feature# Form validation BDD scenarios
-│   └── cart-persistence.feature   # Cart operations & state preservation BDD scenarios
+│   ├── cart-persistence.feature   # Cart operations & state preservation
+│   ├── checkout-validation.feature# Form validation & required field errors
+│   ├── checkout.feature           # Single & multi-product checkout journeys
+│   └── login.feature              # Authentication & access control
 ├── src/
 │   ├── components/
-│   │   └── header.component.ts    # Shared header & navigation drawer
+│   │   └── header.component.ts    # Shared header, cart badge & menu drawer
 │   ├── constants/
-│   │   ├── users.constant.ts      # User credentials & standard error messages
-│   │   └── products.constant.ts   # Product catalog fixtures
+│   │   ├── products.constant.ts   # Product catalog fixtures
+│   │   └── users.constant.ts      # Test credentials & standard error messages
 │   ├── fixtures/
 │   │   └── base.fixture.ts        # Custom fixture injecting pre-instantiated POMs
 │   ├── pages/
 │   │   ├── base.page.ts           # Abstract base page with common helpers
-│   │   ├── login.page.ts          # Authentication interactions
-│   │   ├── inventory.page.ts      # Product listing, sorting, and cart actions
-│   │   ├── cart.page.ts           # Cart review & item removal
-│   │   ├── checkout-step-one.page.ts # Shipping / customer info form
-│   │   ├── checkout-step-two.page.ts # Order review, tax & total calculation
-│   │   └── checkout-complete.page.ts # Confirmation & dispatch verification
+│   │   ├── cart.page.ts           # Cart review, item removal & checkout trigger
+│   │   ├── checkout-complete.page.ts # Confirmation & dispatch verification
+│   │   ├── checkout-step-one.page.ts # Customer shipping info form
+│   │   ├── checkout-step-two.page.ts # Order overview, tax & total calculation
+│   │   ├── inventory.page.ts      # Product listing, sorting & cart actions
+│   │   └── login.page.ts          # Authentication interactions & error banners
 │   ├── steps/                     # 🪜 Cucumber Step Definitions (reusing POMs)
-│   │   ├── login.steps.ts
-│   │   ├── inventory.steps.ts
 │   │   ├── cart.steps.ts
-│   │   └── checkout.steps.ts
+│   │   ├── checkout.steps.ts
+│   │   ├── inventory.steps.ts
+│   │   └── login.steps.ts
 │   ├── types/
-│   │   └── checkout.types.ts      # Data types & interfaces
+│   │   └── checkout.types.ts      # TypeScript interfaces
 │   └── utils/
 │       └── price.util.ts          # Currency parser & financial rounding helpers
+├── .gitignore
+├── package.json
 ├── playwright.config.ts           # BDD + Multi-browser configuration
-├── tsconfig.json                  # Strict TypeScript configuration
-└── package.json
+├── README.md
+└── tsconfig.json
 ```
 
 ---
