@@ -1,0 +1,32 @@
+{
+  "name": "playwright-ts-saucedemo-e2e",
+  "version": "1.0.0",
+  "description": "Enterprise-grade Playwright TypeScript E2E testing demo for Sauce Demo (Swag Labs)",
+  "main": "index.js",
+  "scripts": {
+    "test": "playwright test",
+    "test:headed": "playwright test --headed",
+    "test:ui": "playwright test --ui",
+    "test:debug": "playwright test --debug",
+    "test:chromium": "playwright test --project=chromium",
+    "test:firefox": "playwright test --project=firefox",
+    "test:webkit": "playwright test --project=webkit",
+    "test:report": "playwright show-report",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": [
+    "playwright",
+    "typescript",
+    "e2e-testing",
+    "page-object-model",
+    "saucedemo",
+    "automation"
+  ],
+  "author": "Dwiki Nugraha",
+  "license": "ISC",
+  "devDependencies": {
+    "@playwright/test": "^1.51.0",
+    "@types/node": "^22.13.9",
+    "typescript": "^5.8.2"
+  }
+}
