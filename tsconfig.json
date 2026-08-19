@@ -17,5 +17,5 @@
       "@utils/*": ["src/utils/*"]
     }
   },
-  "include": ["src/**/*", "tests/**/*", "playwright.config.ts"]
+  "include": ["src/**/*", "features/**/*", ".features-gen/**/*", "playwright.config.ts"]
 }

@@ -1,10 +1,13 @@
 import { defineConfig, devices } from '@playwright/test';
+import { defineBddConfig, cucumberReporter } from 'playwright-bdd';
 
-/**
- * See https://playwright.dev/docs/test-configuration.
- */
+const testDir = defineBddConfig({
+  features: 'features/**/*.feature',
+  steps: ['src/steps/**/*.ts', 'src/fixtures/base.fixture.ts'],
+});
+
 export default defineConfig({
-  testDir: './tests',
+  testDir,
   /* Run tests in files in parallel */
   fullyParallel: true,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
@@ -17,25 +20,15 @@ export default defineConfig({
   reporter: [
     ['html', { outputFolder: 'playwright-report', open: 'never' }],
     ['list'],
+    cucumberReporter('html', { outputFile: 'cucumber-report/report.html' }),
   ],
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
-    /* Base URL to use in actions like `await page.goto('/')`. */
     baseURL: 'https://www.saucedemo.com',
-
-    /* Custom test id attribute (Sauce Demo uses `data-test`) */
     testIdAttribute: 'data-test',
-
-    /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
-
-    /* Capture screenshot on failure */
     screenshot: 'only-on-failure',
-
-    /* Record video on failure */
     video: 'retain-on-failure',
-
-    /* Action & navigation timeouts */
     actionTimeout: 15000,
     navigationTimeout: 30000,
   },
@@ -46,7 +39,6 @@ export default defineConfig({
     timeout: 5000,
   },
 
-  /* Configure projects for major browsers */
   projects: [
     {
       name: 'chromium',

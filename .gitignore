@@ -2,6 +2,8 @@ node_modules/
 /test-results/
 /playwright-report/
 /blob-report/
+/cucumber-report/
+/.features-gen/
 /playwright/.cache/
 .DS_Store
 .env

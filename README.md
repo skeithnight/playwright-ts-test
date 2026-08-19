@@ -1,12 +1,15 @@
 # 🎭 Playwright TypeScript - Sauce Demo E2E Test Suite
 
-Enterprise-grade End-to-End (E2E) automation test suite built with **Playwright** and **TypeScript**, targeting the [Sauce Demo (Swag Labs)](https://www.saucedemo.com/) e-commerce web application.
+![Playwright E2E Automation Testing Banner](docs/assets/playwright-e2e-banner.jpg)
+
+Enterprise-grade End-to-End (E2E) automation test suite built with **Playwright**, **TypeScript**, and **Cucumber Gherkin BDD**, targeting the [Sauce Demo (Swag Labs)](https://www.saucedemo.com/) e-commerce web application.
 
 ---
 
 ## 🌟 Key Highlights & Design Patterns
 
 - **Page Object Model (POM) + Component Architecture**: Decouples UI structure and locators from test logic. Modular component structure for shared elements (e.g. Header, Navigation menu).
+- **Cucumber Gherkin BDD Support (`playwright-bdd`)**: Supports human-readable `.feature` files with step definitions while retaining all native Playwright features (Trace Viewer, UI Mode, Parallelism).
 - **Custom Playwright Fixtures (`test.extend`)**: Dependency injection for clean, readable tests without manual `new PageObject(page)` instantiations.
 - **Web-First Assertions & Semantic Locators**: Built using Playwright's auto-retrying locators (`getByRole`, `locator('[data-test="..."]')`) and assertions (`expect(locator).toHaveText(...)`).
 - **Dynamic Price & Math Assertions**: Calculates item subtotals and verifies taxation (`subtotal + tax === total`) using financial precision rounding.
@@ -22,6 +25,11 @@ playwright-ts-test/
 ├── .github/
 │   └── workflows/
 │       └── playwright.yml         # GitHub Actions CI pipeline
+├── features/                      # 🥒 Cucumber Gherkin Feature Files
+│   ├── checkout.feature           # Single & multi-item checkout BDD scenarios
+│   ├── login.feature              # Authentication BDD scenarios
+│   ├── checkout-validation.feature# Form validation BDD scenarios
+│   └── cart-persistence.feature   # Cart operations & state preservation BDD scenarios
 ├── src/
 │   ├── components/
 │   │   └── header.component.ts    # Shared header & navigation drawer
@@ -38,48 +46,48 @@ playwright-ts-test/
 │   │   ├── checkout-step-one.page.ts # Shipping / customer info form
 │   │   ├── checkout-step-two.page.ts # Order review, tax & total calculation
 │   │   └── checkout-complete.page.ts # Confirmation & dispatch verification
+│   ├── steps/                     # 🪜 Cucumber Step Definitions (reusing POMs)
+│   │   ├── login.steps.ts
+│   │   ├── inventory.steps.ts
+│   │   ├── cart.steps.ts
+│   │   └── checkout.steps.ts
 │   ├── types/
 │   │   └── checkout.types.ts      # Data types & interfaces
 │   └── utils/
 │       └── price.util.ts          # Currency parser & financial rounding helpers
-├── tests/
-│   ├── e2e/
-│   │   ├── checkout.spec.ts       # Full single & multi-item E2E checkout flows
-│   │   └── login.spec.ts          # Authentication happy path & negative cases
-│   └── edge-cases/
-│       ├── checkout-validation.spec.ts # Missing input validation & cancel routing
-│       └── cart-persistence.spec.ts    # Cart removal & state preservation
-├── playwright.config.ts           # Multi-browser, reporter, trace & timeout configuration
+├── playwright.config.ts           # BDD + Multi-browser configuration
 ├── tsconfig.json                  # Strict TypeScript configuration
 └── package.json
 ```
 
 ---
 
-## 🧪 Test Suites & Scenarios
+## 🧪 BDD Feature Scenarios
 
-### 1. End-to-End Checkout (`tests/e2e/checkout.spec.ts`)
-- **Single-Product E2E Flow**:
+### 1. End-to-End Checkout (`features/checkout.feature`)
+- **Single-Product E2E Checkout**:
   1. Login with `standard_user`.
   2. Add product (`Sauce Labs Backpack`) to cart & verify badge counter.
   3. Review cart items, quantity (`1`), and price.
   4. Fill shipping information (`First Name`, `Last Name`, `Postal Code`).
-  5. Validate payment method (`SauceCard #31337`), delivery info, and verify mathematical integrity: `Subtotal + Tax === Total`.
-  6. Place order, assert `"Thank you for your order!"`, empty cart badge, and navigate back to inventory.
+  5. Validate payment method, delivery info, and verify mathematical integrity: `Subtotal + Tax === Total`.
+  6. Place order, assert `"Thank you for your order!"`, empty cart badge.
 - **Multi-Item Checkout**:
-  - Adds 3 items simultaneously, verifies cumulative subtotal against catalog prices and tax calculation.
+  - Adds multiple items simultaneously, verifies cumulative subtotal against catalog prices and tax calculation.
 
-### 2. Authentication & Security (`tests/e2e/login.spec.ts`)
+### 2. Authentication & Access Control (`features/login.feature`)
 - Happy path login for `standard_user`.
 - Locked-out account validation (`locked_out_user`) with exact error banner assertion.
 - Invalid username/password error validation.
-- Blank username / blank password validation.
+- Blank username required error validation.
 - User logout flow via hamburger sidebar menu.
 
-### 3. Edge Cases & Form Validations (`tests/edge-cases/`)
-- Form required fields: Missing First Name, Last Name, and Postal Code error messages.
-- Cancel buttons: Verifies correct step-back routing from step 1 (to Cart) and step 2 (to Products).
-- Cart persistence: Item removal from cart page and "Continue Shopping" state preservation.
+### 3. Checkout Form Validations (`features/checkout-validation.feature`)
+- Validates missing First Name, Last Name, and Postal Code required field errors.
+
+### 4. Cart Operations & State Persistence (`features/cart-persistence.feature`)
+- Item removal directly from the cart page.
+- Cart state preservation when clicking "Continue Shopping" and adding additional items.
 
 ---
 

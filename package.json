@@ -4,13 +4,15 @@
   "description": "Enterprise-grade Playwright TypeScript E2E testing demo for Sauce Demo (Swag Labs)",
   "main": "index.js",
   "scripts": {
-    "test": "playwright test",
-    "test:headed": "playwright test --headed",
-    "test:ui": "playwright test --ui",
-    "test:debug": "playwright test --debug",
-    "test:chromium": "playwright test --project=chromium",
-    "test:firefox": "playwright test --project=firefox",
-    "test:webkit": "playwright test --project=webkit",
+    "bdd:gen": "bddgen",
+    "test": "bddgen && playwright test",
+    "test:bdd": "bddgen && playwright test",
+    "test:headed": "bddgen && playwright test --headed",
+    "test:ui": "bddgen && playwright test --ui",
+    "test:debug": "bddgen && playwright test --debug",
+    "test:chromium": "bddgen && playwright test --project=chromium",
+    "test:firefox": "bddgen && playwright test --project=firefox",
+    "test:webkit": "bddgen && playwright test --project=webkit",
     "test:report": "playwright show-report",
     "typecheck": "tsc --noEmit"
   },
@@ -25,8 +27,10 @@
   "author": "Dwiki Nugraha",
   "license": "ISC",
   "devDependencies": {
+    "@cucumber/cucumber": "^12.9.0",
     "@playwright/test": "^1.51.0",
     "@types/node": "^22.13.9",
+    "playwright-bdd": "^9.2.0",
     "typescript": "^5.8.2"
   }
 }
